@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <team.ideart.shiguang_app.app.component.BackgroundLayout
+        android:id="@+id/backgroud_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    </team.ideart.shiguang_app.app.component.BackgroundLayout>
+
+    <RelativeLayout
+        android:id="@+id/bgLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:orientation="horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:id="@+id/relativeLayout">
+            <ImageView
+                android:background="@drawable/skyblue_actionbar_back_btn"
+                android:id="@+id/right_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
+            <ImageView
+                android:background="@drawable/skyblue_actionbar_ok_btn"
+                android:layout_alignParentRight="true"
+                android:id="@+id/left_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+        </RelativeLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:background="@null"
+            android:gravity="center_horizontal|center_vertical"
+            />
+        <LinearLayout
+            android:id="@+id/op_layout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_add_img"
+                android:src="@drawable/add_camera"
+                android:layout_margin="10dp"
+                android:layout_width="60dp"
+
+                android:layout_height="60dp" />
+
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_add_voice"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:src="@drawable/add_sound"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:layout_height="60dp" />-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_add_video"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:src="@drawable/add_video"-->
+                <!--android:layout_height="60dp" />-->
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_pick_color"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#99FF9800"
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="27dp"
+            android:src="@drawable/lucky_patcher"
+            />
+
+        <ImageView
+            android:id="@+id/iv_weather"
+            android:src="@drawable/weather1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/iv_pick_color"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="51dp"
+            android:layout_marginEnd="51dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

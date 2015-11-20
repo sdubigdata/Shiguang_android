@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+    <TableRow>
+        <ImageView
+            android:id="@+id/img1"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:background="#44aaaaaa"
+            android:tag="#44aaaaaa"
+            />
+        <ImageView
+            android:id="@+id/img2"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:background="#44626e2c"
+            android:tag="#44626e2c"
+            />
+        <ImageView
+            android:id="@+id/img3"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:background="#4ccc"
+            />
+    </TableRow>
+
+    <TableRow>
+        <ImageView
+            android:id="@+id/img4"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:background="#4ddd"
+            />
+        <ImageView
+            android:id="@+id/img5"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:background="#4eee"
+            />
+        <ImageView
+            android:id="@+id/img6"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:background="#4fff"
+            />
+    </TableRow>
+
+    <TableRow>
+        <ImageView
+            android:id="@+id/img7"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:background="#4231"
+            />
+        <ImageView
+            android:id="@+id/img8"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:background="#3831"
+            />
+        <ImageView
+            android:id="@+id/img9"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:background="#4a31"
+            />
+    </TableRow>
+
+</TableLayout>
