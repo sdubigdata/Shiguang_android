@@ -20,17 +20,28 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
+import com.loopj.android.http.RequestParams;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.DialogPlusBuilder;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 
+import cz.msebera.android.httpclient.Header;
 import team.ideart.shiguang_app.app.component.BackgroundLayout;
 import team.ideart.shiguang_app.app.component.ColorPickerLayout;
 
@@ -38,6 +49,8 @@ import team.ideart.shiguang_app.app.component.ColorPickerLayout;
  * Created by yestin on 2015/11/20.
  */
 public class AddActivity extends Activity implements View.OnClickListener{
+
+    public static String SERVER="http://192.168.191.5:8080";
 
     private static int INTENT_REQUEST_GET_IMAGES = 1,INTENT_REQUEST_SHOT_IMAGES=2;
 
@@ -50,6 +63,8 @@ public class AddActivity extends Activity implements View.OnClickListener{
     public ImageView picOpView;
 
     private Uri imgUri ;
+
+    private File filePath;
 
     AsyncHttpClient client = new AsyncHttpClient();
 
@@ -84,8 +99,53 @@ public class AddActivity extends Activity implements View.OnClickListener{
         picOpView.setOnClickListener(this);
     }
 
-    public void send(){
+    public void sendPost(String path){
+        RequestParams params = new RequestParams();
 
+//        params.add("token",StaticHolder.token);
+//        params.add("path",path);
+//        params.add("content","test");
+//        params.add
+
+        final RequestHandle post = client.post(SERVER+"/uploadPost", params, new JsonHttpResponseHandler() {
+
+        });
+    }
+
+    public void send(){
+        RequestParams params = new RequestParams();
+        try {
+            params.put("multipart_upload_file", filePath);
+            params.put("token",StaticHolder.token);
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        final RequestHandle post = client.post(SERVER+"/uploadMultipart", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+                try {
+                    String path = response.getString("multipartPath");
+                    Log.i("path",path);
+                    //post to server
+                    sendPost(path);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                // Pull out the first event on the public timeline
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.e("path","status:"+statusCode);
+            }
+        });
     }
 
     public void pickUpColor(View view){
@@ -115,6 +175,7 @@ public class AddActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         if (v == rightBtn){
             //send to server.
+            send();
         } else if (v == leftBtn){
             this.finish();
         } else if (v == picOpView){
@@ -152,13 +213,20 @@ public class AddActivity extends Activity implements View.OnClickListener{
         if(requestCode == INTENT_REQUEST_GET_IMAGES){
             if (resultCode == Activity.RESULT_OK) {
                 Uri cameraBitmapUri = (Uri) intent.getData();
-                Bitmap cameraBitmap = null;
-                try {
-                    cameraBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), cameraBitmapUri);
+                if(cameraBitmapUri != null){
+                    Bitmap cameraBitmap = null;
+                    try {
+                        cameraBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), cameraBitmapUri);
+                        backgroudLayout.setImageView(cameraBitmap);
+                        saveFile(cameraBitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else{
+                    Bitmap cameraBitmap = null;
+                    cameraBitmap = (Bitmap) intent.getExtras().get("data");
                     backgroudLayout.setImageView(cameraBitmap);
                     saveFile(cameraBitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         } else if (requestCode == INTENT_REQUEST_SHOT_IMAGES){
@@ -172,6 +240,18 @@ public class AddActivity extends Activity implements View.OnClickListener{
     }
 
     public void saveFile(Bitmap cameraBitmap){
-
+        File sdDire = Environment.getExternalStorageDirectory();
+        try {
+            File file = new File(sdDire.getCanonicalPath() + "/ideart/" + System.currentTimeMillis() + ".png");
+            if(!file.getParentFile().isDirectory()) file.getParentFile().mkdirs();
+            FileOutputStream outFileStream = new FileOutputStream(file);
+            cameraBitmap.compress(Bitmap.CompressFormat.PNG, 90, outFileStream);
+            outFileStream.flush();
+            outFileStream.close();
+            filePath = file;
+           Log.v("saveFile","Done! path:"+file.getPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

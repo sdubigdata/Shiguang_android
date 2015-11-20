@@ -28,20 +28,21 @@
             android:id="@+id/relativeLayout">
             <ImageView
                 android:background="@drawable/skyblue_actionbar_back_btn"
-                android:id="@+id/right_btn"
+                android:id="@+id/left_btn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 />
             <ImageView
                 android:background="@drawable/skyblue_actionbar_ok_btn"
                 android:layout_alignParentRight="true"
-                android:id="@+id/left_btn"
+                android:id="@+id/right_btn"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
 
         </RelativeLayout>
 
         <EditText
+            android:layout_marginTop="200dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
