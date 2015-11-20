@@ -1,0 +1,5 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <color name="actionbar_main_color">#9b59b6</color>
+    <color name="sidebar_divider_color">#666</color>
+</resources>

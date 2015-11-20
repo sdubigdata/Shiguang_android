@@ -1,0 +1,7 @@
+<resources>
+    <array name="menu_item">
+        <item>侧边栏1</item>
+        <item>侧边栏2</item>
+        <item>侧边栏3</item>
+    </array>
+</resources>
