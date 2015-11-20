@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 
 import cz.msebera.android.httpclient.Header;
 import team.ideart.shiguang_app.app.R;
+import team.ideart.shiguang_app.app.utils.Host;
 
 /**
  * Created by yestin on 2015/11/21.
@@ -60,7 +61,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             RequestParams params = new RequestParams();
             params.put("username", userNameT.getText());
             params.put("password", passwordT.getText());
-            client.post(this, AddActivity.SERVER + "/login", params, new JsonHttpResponseHandler() {
+            client.post(this, Host.SERVER + "/login", params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     // If the response is JSONObject instead of expected JSONArray
@@ -69,7 +70,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                             String path = response.getString("token");
                             StaticHolder.token = path;
                             Log.i("token", path);
-                            startActivity(new Intent(LoginActivity.this, AddActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             LoginActivity.this.finish();
                         } else {
                             Log.i("error", "code:"+response.getInt("code"));

@@ -46,13 +46,12 @@ import java.util.Date;
 import cz.msebera.android.httpclient.Header;
 import team.ideart.shiguang_app.app.component.BackgroundLayout;
 import team.ideart.shiguang_app.app.component.ColorPickerLayout;
+import team.ideart.shiguang_app.app.utils.Host;
 
 /**
  * Created by yestin on 2015/11/20.
  */
 public class AddActivity extends Activity implements View.OnClickListener{
-
-    public static String SERVER="http://192.168.191.5:8080";
 
     private static int INTENT_REQUEST_GET_IMAGES = 1,INTENT_REQUEST_SHOT_IMAGES=2;
 
@@ -114,7 +113,7 @@ public class AddActivity extends Activity implements View.OnClickListener{
         params.add("color", currentColor + "");
         params.add("weather","sunny");
 
-        final RequestHandle post = client.post(SERVER+"/uploadPost", params, new JsonHttpResponseHandler() {
+        final RequestHandle post = client.post(Host.SERVER+"/uploadPost", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
@@ -137,7 +136,7 @@ public class AddActivity extends Activity implements View.OnClickListener{
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
-        final RequestHandle post = client.post(SERVER+"/uploadMultipart", params, new JsonHttpResponseHandler() {
+        final RequestHandle post = client.post(Host.SERVER+"/uploadMultipart", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
