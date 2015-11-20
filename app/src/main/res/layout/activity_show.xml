@@ -32,12 +32,6 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 />
-            <ImageView
-                android:background="@drawable/skyblue_actionbar_ok_btn"
-                android:layout_alignParentRight="true"
-                android:id="@+id/right_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
 
         </RelativeLayout>
 
@@ -52,53 +46,6 @@
             android:textColor="#FFF"
             android:textSize="30dp"
             android:gravity="center_horizontal|center_vertical"
-            />
-        <LinearLayout
-            android:id="@+id/op_layout"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_add_img"
-                android:src="@drawable/add_camera"
-                android:layout_margin="10dp"
-                android:layout_width="60dp"
-
-                android:layout_height="60dp" />
-
-            <!--<ImageView-->
-                <!--android:id="@+id/iv_add_voice"-->
-                <!--android:layout_width="60dp"-->
-                <!--android:src="@drawable/add_sound"-->
-                <!--android:layout_margin="10dp"-->
-                <!--android:layout_height="60dp" />-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/iv_add_video"-->
-                <!--android:layout_width="60dp"-->
-                <!--android:layout_margin="10dp"-->
-                <!--android:src="@drawable/add_video"-->
-                <!--android:layout_height="60dp" />-->
-
-        </LinearLayout>
-
-
-        <ImageView
-            android:id="@+id/iv_pick_color"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginStart="35dp"
-            android:layout_below="@+id/relativeLayout"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="27dp"
-            android:src="@drawable/lucky_patcher"
             />
 
         <ImageView

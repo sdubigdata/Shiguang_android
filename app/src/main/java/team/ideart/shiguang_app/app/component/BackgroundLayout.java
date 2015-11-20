@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
-import com.yqritc.scalableimageview.ScalableImageView;
 import com.yqritc.scalablevideoview.ScalableVideoView;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ import team.ideart.shiguang_app.app.R;
  */
 public class BackgroundLayout extends RelativeLayout{
 
-    private ScalableImageView imageView;
+    private AutoScrollImageView imageView;
     private ScalableVideoView videoView;
 
     private Context context;
@@ -49,7 +48,7 @@ public class BackgroundLayout extends RelativeLayout{
 
         LayoutInflater.from(context).inflate(R.layout.layout_add_backgroud, this, true);
 
-        imageView = (ScalableImageView) findViewById(R.id.img);
+        imageView = (AutoScrollImageView) findViewById(R.id.img);
         videoView = (ScalableVideoView) findViewById(R.id.video);
         videoView.setVisibility(INVISIBLE);
 //        try {

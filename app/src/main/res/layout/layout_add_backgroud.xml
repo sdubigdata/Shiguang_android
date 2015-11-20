@@ -4,7 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.yqritc.scalableimageview.ScalableImageView
+    <team.ideart.shiguang_app.app.component.AutoScrollImageView
         android:id="@+id/img"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -12,7 +12,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:src="@drawable/bg1"
-        app:scalableType="centerCrop"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 

@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DialerFilter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.PopupWindow;
@@ -40,6 +41,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 import team.ideart.shiguang_app.app.component.BackgroundLayout;
@@ -60,9 +62,11 @@ public class AddActivity extends Activity implements View.OnClickListener{
 
     public ImageView colorPickBtn,rightBtn,leftBtn;
 
+    public EditText editText;
+
     public ImageView picOpView;
 
-    private Uri imgUri ;
+    private int currentColor =  0x2a1ABC9C;
 
     private File filePath;
 
@@ -97,18 +101,31 @@ public class AddActivity extends Activity implements View.OnClickListener{
 
         picOpView = (ImageView) findViewById(R.id.iv_add_img);
         picOpView.setOnClickListener(this);
+
+        editText = (EditText) findViewById(R.id.edit_text);
     }
 
     public void sendPost(String path){
         RequestParams params = new RequestParams();
 
-//        params.add("token",StaticHolder.token);
-//        params.add("path",path);
-//        params.add("content","test");
-//        params.add
+        params.add("token",StaticHolder.token);
+        params.add("path",path);
+        params.add("content",editText.getText().toString());
+        params.add("color", currentColor + "");
+        params.add("weather","sunny");
 
         final RequestHandle post = client.post(SERVER+"/uploadPost", params, new JsonHttpResponseHandler() {
-
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+                try {
+                    int code = response.getInt("code");
+                    Log.i("code", "" + code);
+                    Toast.makeText(AddActivity.this,"记录成功",Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         });
     }
 
@@ -157,6 +174,11 @@ public class AddActivity extends Activity implements View.OnClickListener{
         colorPicker.setOnPickedListener(new ColorPickerLayout.OnPickListener() {
             @Override
             public void onPicked(String colorStr) {
+                String hexStr = colorStr.replace("#","").replace("88","2a");
+                int colorVal = Integer.valueOf(hexStr,16);
+                bgLayout.setBackgroundColor(colorVal);
+//                colorPickBtn.setBackgroundColor(colorVal);
+                currentColor = colorVal;
                 Log.v(this.getClass().getSimpleName(), "" + colorStr);
                 popupWindow.dismiss();
             }
@@ -198,10 +220,10 @@ public class AddActivity extends Activity implements View.OnClickListener{
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 80);
-        intent.putExtra("outputY", 80);
+        intent.putExtra("aspectX", 4);
+        intent.putExtra("aspectY", 3);
+        intent.putExtra("outputX", 400);
+        intent.putExtra("outputY", 300);
         intent.putExtra("return-data", true);
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }

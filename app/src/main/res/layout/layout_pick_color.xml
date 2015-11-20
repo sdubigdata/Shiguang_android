@@ -8,66 +8,75 @@
     <TableRow>
         <ImageView
             android:id="@+id/img1"
-            android:minWidth="40dp"
-            android:minHeight="40dp"
-            android:background="#44aaaaaa"
-            android:tag="#44aaaaaa"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:background="#881ABC9C"
+            android:tag="#881ABC9C"
+
             />
         <ImageView
             android:id="@+id/img2"
-            android:minWidth="40dp"
-            android:minHeight="40dp"
-            android:background="#44626e2c"
-            android:tag="#44626e2c"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:background="#882ECC71"
+            android:tag="#882ECC71"
             />
         <ImageView
             android:id="@+id/img3"
-            android:minWidth="40dp"
-            android:minHeight="40dp"
-            android:background="#4ccc"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:background="#883498DB"
+            android:tag="#883498DB"
             />
     </TableRow>
 
     <TableRow>
         <ImageView
             android:id="@+id/img4"
-            android:minWidth="40dp"
-            android:minHeight="40dp"
-            android:background="#4ddd"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:background="#889B59B6"
+            android:tag="#889B59B6"
             />
         <ImageView
             android:id="@+id/img5"
-            android:minWidth="40dp"
-            android:minHeight="40dp"
-            android:background="#4eee"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:background="#8834495E"
+            android:tag="#8834495E"
             />
         <ImageView
             android:id="@+id/img6"
-            android:minWidth="40dp"
-            android:minHeight="40dp"
-            android:background="#4fff"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:background="#88F1C40F"
+            android:tag="#88F1C40F"
             />
     </TableRow>
 
     <TableRow>
         <ImageView
             android:id="@+id/img7"
-            android:minWidth="40dp"
-            android:minHeight="40dp"
-            android:background="#4231"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:background="#88E67E22"
+            android:tag="#88E67E22"
             />
         <ImageView
             android:id="@+id/img8"
-            android:minWidth="40dp"
-            android:minHeight="40dp"
-            android:background="#3831"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:background="#88E74C3C"
+            android:tag="#88E74C3C"
             />
         <ImageView
             android:id="@+id/img9"
-            android:minWidth="40dp"
-            android:minHeight="40dp"
-            android:background="#4a31"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:background="#8895A5A6"
+            android:tag="#8895A5A6"
             />
     </TableRow>
 
 </TableLayout>
+
