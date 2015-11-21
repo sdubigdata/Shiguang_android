@@ -41,6 +41,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         findViews();
+        if(StaticHolder.getToken(this) != null){
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            LoginActivity.this.finish();
+        }
     }
 
     private void findViews(){
@@ -68,7 +72,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     try {
                         if (response.getInt("code") == 0) {
                             String path = response.getString("token");
-                            StaticHolder.token = path;
+                            StaticHolder.setToken(LoginActivity.this,path);
                             Log.i("token", path);
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             LoginActivity.this.finish();

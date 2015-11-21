@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -67,15 +68,29 @@ public class BackgroundLayout extends RelativeLayout{
     }
 
     public void setImageView(Bitmap bitmap){
+        imageView.setVisibility(VISIBLE);
+        videoView.setVisibility(INVISIBLE);
+//        if(videoView != null && videoView.isPlaying()) videoView.stop();
         imageView.setImageBitmap(bitmap);
+
     }
 
     public void clearImageView(){
 
     }
 
-    public void setVideoView(){
-
+    public void setVideoView(Uri uri) throws IOException {
+        imageView.setVisibility(INVISIBLE);
+        videoView.setVisibility(VISIBLE);
+        videoView.setDataSource(context,uri);
+        videoView.setVolume(0, 0);
+        videoView.setLooping(true);
+        videoView.prepareAsync(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                videoView.start();
+            }
+        });
     }
 
     public void clearVideoView(){

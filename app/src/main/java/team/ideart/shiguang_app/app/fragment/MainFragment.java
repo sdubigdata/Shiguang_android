@@ -1,6 +1,7 @@
 package team.ideart.shiguang_app.app.fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import com.loopj.android.http.ResponseHandlerInterface;
 import cz.msebera.android.httpclient.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import team.ideart.shiguang_app.app.LoginActivity;
+import team.ideart.shiguang_app.app.MainActivity;
 import team.ideart.shiguang_app.app.R;
 import team.ideart.shiguang_app.app.StaticHolder;
 import team.ideart.shiguang_app.app.adapter.TimeLineAdapter;
@@ -61,11 +65,15 @@ public class MainFragment extends Fragment{
     private void requestTimeLine(){
         items = new LinkedList<>();
         RequestParams params = new RequestParams();
-        params.put("token", StaticHolder.token);
+        params.put("token", StaticHolder.getToken(this.getActivity()));
 
         client.get(getActivity(), requestUrl, params, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if(statusCode == 1){
+                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                    getActivity().finish();
+                }
                 Log.i("LIST TIMELINE",response.toString());
                 try{
                     JSONArray array = response.getJSONArray("postList");

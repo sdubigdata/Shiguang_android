@@ -57,8 +57,6 @@ public class ShowActivity extends Activity implements View.OnClickListener{
 
     private File filePath;
 
-    AsyncHttpClient client = new AsyncHttpClient();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

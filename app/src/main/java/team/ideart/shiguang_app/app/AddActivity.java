@@ -3,6 +3,7 @@ package team.ideart.shiguang_app.app;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -53,7 +54,8 @@ import team.ideart.shiguang_app.app.utils.Host;
  */
 public class AddActivity extends Activity implements View.OnClickListener{
 
-    private static int INTENT_REQUEST_GET_IMAGES = 1,INTENT_REQUEST_SHOT_IMAGES=2;
+    private static int INTENT_REQUEST_GET_IMAGES = 1,INTENT_REQUEST_SHOT_IMAGES=2,
+            REQUEST_CODE_TAKE_VIDEO=3,INTENT_REQUEST_RECORD_SOUND=4;
 
     public RelativeLayout bgLayout;
 
@@ -63,11 +65,13 @@ public class AddActivity extends Activity implements View.OnClickListener{
 
     public EditText editText;
 
-    public ImageView picOpView;
+    public ImageView picOpView,videoOpView,soundOpView;
 
     private int currentColor =  0x2a1ABC9C;
 
     private File filePath;
+
+    private String strVideoPath,strRecorderPath;
 
     AsyncHttpClient client = new AsyncHttpClient();
 
@@ -102,16 +106,22 @@ public class AddActivity extends Activity implements View.OnClickListener{
         picOpView.setOnClickListener(this);
 
         editText = (EditText) findViewById(R.id.edit_text);
+
+        videoOpView = (ImageView) findViewById(R.id.iv_add_video);
+        videoOpView.setOnClickListener(this);
+
+        soundOpView = (ImageView) findViewById(R.id.iv_add_voice);
+        soundOpView.setOnClickListener(this);
     }
 
     public void sendPost(String path){
         RequestParams params = new RequestParams();
 
-        params.add("token",StaticHolder.token);
+        params.add("token",StaticHolder.getToken(this));
         params.add("path",path);
-        params.add("content",editText.getText().toString());
+        params.add("content", editText.getText().toString());
         params.add("color", currentColor + "");
-        params.add("weather","sunny");
+        params.add("weather", "sunny");
 
         final RequestHandle post = client.post(Host.SERVER+"/uploadPost", params, new JsonHttpResponseHandler() {
             @Override
@@ -120,7 +130,12 @@ public class AddActivity extends Activity implements View.OnClickListener{
                 try {
                     int code = response.getInt("code");
                     Log.i("code", "" + code);
-                    Toast.makeText(AddActivity.this,"记录成功",Toast.LENGTH_SHORT).show();
+                    if(code == 0){
+                        Toast.makeText(AddActivity.this,"记录成功",Toast.LENGTH_SHORT).show();
+                    } else if (code == 1){
+                        startActivity(new Intent(AddActivity.this, LoginActivity.class));
+                        AddActivity.this.finish();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -131,8 +146,12 @@ public class AddActivity extends Activity implements View.OnClickListener{
     public void send(){
         RequestParams params = new RequestParams();
         try {
-            params.put("multipart_upload_file", filePath);
-            params.put("token",StaticHolder.token);
+            if(strVideoPath == null){
+                params.put("multipart_upload_file", filePath);
+            } else {
+                params.put("multipart_upload_file", new File(strVideoPath));
+            }
+            params.put("token",StaticHolder.getToken(this));
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -202,7 +221,23 @@ public class AddActivity extends Activity implements View.OnClickListener{
         } else if (v == picOpView){
             //choose file
             shotOrPick();
+        } else if (v == videoOpView){
+            recordVideo();
+        } else if (v == soundOpView){
+//            recordSound();
         }
+    }
+
+    private void recordSound(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("audio/amr");
+        startActivityForResult(intent, INTENT_REQUEST_RECORD_SOUND);
+    }
+
+    private void recordVideo(){
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+        startActivityForResult(intent, REQUEST_CODE_TAKE_VIDEO);
     }
 
     private void shotOrPick(){
@@ -233,6 +268,7 @@ public class AddActivity extends Activity implements View.OnClickListener{
 
         if(requestCode == INTENT_REQUEST_GET_IMAGES){
             if (resultCode == Activity.RESULT_OK) {
+                strVideoPath = null;
                 Uri cameraBitmapUri = (Uri) intent.getData();
                 if(cameraBitmapUri != null){
                     Bitmap cameraBitmap = null;
@@ -252,10 +288,36 @@ public class AddActivity extends Activity implements View.OnClickListener{
             }
         } else if (requestCode == INTENT_REQUEST_SHOT_IMAGES){
             if(resultCode == Activity.RESULT_OK){
+                strVideoPath = null;
                 Bitmap cameraBitmap = null;
                 cameraBitmap = (Bitmap) intent.getExtras().get("data");
                 backgroudLayout.setImageView(cameraBitmap);
                 saveFile(cameraBitmap);
+            }
+        } else if (requestCode == REQUEST_CODE_TAKE_VIDEO){
+            if(resultCode == Activity.RESULT_OK){
+                Uri uriVideo = intent.getData();
+                Cursor cursor=this.getContentResolver().query(uriVideo, null, null, null, null);
+                if (cursor.moveToNext()) {
+                                         /* _data：文件的绝对路径 ，_display_name：文件名 */
+                    strVideoPath = cursor.getString(cursor.getColumnIndex("_data"));
+                    Toast.makeText(this, strVideoPath, Toast.LENGTH_SHORT).show();
+                    try {
+                        backgroudLayout.setVideoView(uriVideo);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } else if (requestCode == INTENT_REQUEST_RECORD_SOUND){
+            if (resultCode == RESULT_OK) {
+                Uri uriRecorder = intent.getData();
+                Cursor cursor=this.getContentResolver().query(uriRecorder, null, null, null, null);
+                if (cursor.moveToNext()) {
+                                         /* _data：文件的绝对路径 ，_display_name：文件名 */
+                    strRecorderPath = cursor.getString(cursor.getColumnIndex("_data"));
+                    Toast.makeText(this, strRecorderPath, Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
