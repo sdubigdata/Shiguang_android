@@ -132,6 +132,7 @@ public class AddActivity extends Activity implements View.OnClickListener{
                     Log.i("code", "" + code);
                     if(code == 0){
                         Toast.makeText(AddActivity.this,"记录成功",Toast.LENGTH_SHORT).show();
+                        AddActivity.this.finish();
                     } else if (code == 1){
                         startActivity(new Intent(AddActivity.this, LoginActivity.class));
                         AddActivity.this.finish();
