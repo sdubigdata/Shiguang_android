@@ -3,10 +3,13 @@ package team.ideart.shiguang_app.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +36,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import cz.msebera.android.httpclient.Header;
 import team.ideart.shiguang_app.app.component.BackgroundLayout;
@@ -62,28 +70,48 @@ public class ShowActivity extends Activity implements View.OnClickListener{
     private TimeLine timeLine;
 
     AsyncHttpClient client = new AsyncHttpClient();
+    Handler mHandler;
+
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_show);
 
         timeLine = (TimeLine)getIntent().getExtras().get("timeLine");
         findViews();
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case 1:
+                        backgroudLayout.setImageView(bitmap);
+                        break;
+                }
+            }
+        };
     }
 
     public void findViews(){
         backgroudLayout = (BackgroundLayout) findViewById(R.id.backgroud_layout);
-        backgroudLayout.setImageView(getBitmap(Uri.parse(Host.SERVER + timeLine.getResUrl())));
+        Log.v("tag",""+Host.SERVER + timeLine.getResUrl());
+        new Thread(){
+            public void run(){
+                bitmap = returnBitMap(Host.SERVER + timeLine.getResUrl());
+                Message message = new Message();
+                message.what = 1;
+                mHandler.sendMessage(message);
+            }
+        }.start();
         bgLayout = (RelativeLayout) findViewById(R.id.bgLayout);
         bgLayout.setBackgroundColor(timeLine.getColor());
 
         leftBtn = (ImageView) findViewById(R.id.left_btn);
 
         leftBtn.setOnClickListener(this);
-
-        picOpView = (ImageView) findViewById(R.id.iv_add_img);
-        picOpView.setOnClickListener(this);
 
         editText = (TextView) findViewById(R.id.edit_text);
         editText.setText(timeLine.getContent());
@@ -95,15 +123,25 @@ public class ShowActivity extends Activity implements View.OnClickListener{
             this.finish();
         }
     }
-
-    private Bitmap getBitmap(Uri uri){
-        try{
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),uri);
-            return bitmap;
-        }catch (Exception e){
+    public Bitmap returnBitMap(String url){
+        URL myFileUrl = null;
+        Bitmap bitmap = null;
+        try {
+            myFileUrl = new URL(url);
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        return null;
+        try {
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
-
 }
