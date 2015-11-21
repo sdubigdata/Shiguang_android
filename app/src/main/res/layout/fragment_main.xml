@@ -8,6 +8,7 @@
             android:layout_height="fill_parent"
             android:layout_width="3dp"
             android:layout_marginLeft="40dp"
+            android:visibility="invisible"
             android:background="@color/actionbar_main_color"
         />
     <ListView
@@ -18,5 +19,11 @@
         android:scrollbars="vertical"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:visibility="invisible"
         android:id="@+id/timeline_view"/>
+    <TextView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+                android:id="@+id/loading_txt"
+                android:text="@string/loading"
+                android:layout_centerInParent="true"/>
 </RelativeLayout>

@@ -10,6 +10,8 @@ import team.ideart.shiguang_app.app.R;
 import team.ideart.shiguang_app.app.entity.TimeLine;
 import team.ideart.shiguang_app.app.utils.Host;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,12 +26,15 @@ public class TimeLineAdapter extends BaseAdapter{
     private LayoutInflater mInflater;
     private List<TimeLine> items;
     private ImageLoader imageLoader;
+    private SimpleDateFormat sdf;
+    private String loaction = "山东大学计算机学院";
 
     public TimeLineAdapter(Context context, List<TimeLine> items) {
         this.context = context;
         this.items = items;
         mInflater = LayoutInflater.from(context);
         imageLoader = ImageLoader.getInstance();
+        sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分");
     }
 
     @Override
@@ -60,11 +65,15 @@ public class TimeLineAdapter extends BaseAdapter{
             viewHolder.content = (ImageView) view.findViewById(R.id.timeline_img);
             viewHolder.overlay = (TextView) view.findViewById(R.id.timeline_overlay);
             viewHolder.title = (TextView) view.findViewById(R.id.timeline_title);
+            viewHolder.location = (TextView) view.findViewById(R.id.timeline_location);
             view.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.dateTime.setText(timeline.getDate());
+        String date = sdf.format(new Date(timeline.getDate()));
+
+        viewHolder.dateTime.setText(date);
+        viewHolder.location.setText(loaction);
         viewHolder.weather.setText(timeline.getWeather());
         viewHolder.overlay.setBackgroundColor(timeline.getColor());
         viewHolder.title.setText(timeline.getContent());
@@ -79,6 +88,7 @@ public class TimeLineAdapter extends BaseAdapter{
         public ImageView content;
         public TextView overlay;
         public TextView title;
+        public TextView location;
     }
 
     private void loadImage(ImageView imageView, String imgUrl){

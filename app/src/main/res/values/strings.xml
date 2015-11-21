@@ -9,5 +9,8 @@
 
     <string name="sidebar_item_home">时间线</string>
     <string name="sidebar_item_settings">设置</string>
+    <string name="sidebar_item_exit">注销</string>
+    <string name="action_reload">刷新</string>
     <string name="action_add">添加</string>
+    <string name="loading">正在加载...</string>
 </resources>

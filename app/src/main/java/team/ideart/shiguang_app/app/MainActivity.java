@@ -1,8 +1,10 @@
 package team.ideart.shiguang_app.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -128,6 +130,9 @@ public class MainActivity extends Activity {
             case "SETTINGS":
                 fragment = new SettingsFragment();
                 break;
+            case "EXIT":
+                exitApp();
+                break;
             default:
                 fragment = new MainFragment();
         }
@@ -173,11 +178,31 @@ public class MainActivity extends Activity {
         items = new LinkedList<>();
         items.add(new SidebarItem("HOME", R.drawable.ic_grid, R.drawable.ic_grid_active, R.string.sidebar_item_home));
         items.add(new SidebarItem("SETTINGS", R.drawable.ic_settings, R.drawable.ic_settings_active, R.string.sidebar_item_settings));
-
+        items.add(new SidebarItem("EXIT", R.drawable.ic_exit1, R.drawable.ic_exit1_active,R.string.sidebar_item_exit));
         mDrawerList.setAdapter(new SidebarListAdapter(MainActivity.this, items));
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
+    }
+
+    private void exitApp(){
+        new AlertDialog
+                .Builder(this)
+                .setTitle("确定注销?")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        StaticHolder.setToken(MainActivity.this, null);
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        MainActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).show();
     }
 
 }

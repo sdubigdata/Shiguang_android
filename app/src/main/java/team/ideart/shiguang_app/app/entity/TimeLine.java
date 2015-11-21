@@ -1,15 +1,17 @@
 package team.ideart.shiguang_app.app.entity;
 
+import java.io.Serializable;
+
 /**
  * TimeLine
  *
  * @author Allen Jin
  * @date 2015/11/21
  */
-public class TimeLine {
+public class TimeLine implements Serializable {
 
     private int id;
-    private String date;
+    private long date;
     private String weather;
     private int color;
     private String content;
@@ -24,11 +26,11 @@ public class TimeLine {
         this.id = id;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

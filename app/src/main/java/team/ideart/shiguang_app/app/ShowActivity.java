@@ -37,6 +37,8 @@ import java.io.IOException;
 import cz.msebera.android.httpclient.Header;
 import team.ideart.shiguang_app.app.component.BackgroundLayout;
 import team.ideart.shiguang_app.app.component.ColorPickerLayout;
+import team.ideart.shiguang_app.app.entity.TimeLine;
+import team.ideart.shiguang_app.app.utils.Host;
 
 /**
  * Created by yestin on 2015/11/20.
@@ -57,18 +59,24 @@ public class ShowActivity extends Activity implements View.OnClickListener{
 
     private File filePath;
 
+    private TimeLine timeLine;
+
+    AsyncHttpClient client = new AsyncHttpClient();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        timeLine = (TimeLine)getIntent().getExtras().get("timeLine");
         findViews();
     }
 
     public void findViews(){
         backgroudLayout = (BackgroundLayout) findViewById(R.id.backgroud_layout);
-
+        backgroudLayout.setImageView(getBitmap(Uri.parse(Host.SERVER + timeLine.getResUrl())));
         bgLayout = (RelativeLayout) findViewById(R.id.bgLayout);
-        bgLayout.setBackgroundColor(0x2aFF9800);
+        bgLayout.setBackgroundColor(timeLine.getColor());
 
         leftBtn = (ImageView) findViewById(R.id.left_btn);
 
@@ -78,6 +86,7 @@ public class ShowActivity extends Activity implements View.OnClickListener{
         picOpView.setOnClickListener(this);
 
         editText = (TextView) findViewById(R.id.edit_text);
+        editText.setText(timeLine.getContent());
     }
 
     @Override
@@ -86,4 +95,15 @@ public class ShowActivity extends Activity implements View.OnClickListener{
             this.finish();
         }
     }
+
+    private Bitmap getBitmap(Uri uri){
+        try{
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),uri);
+            return bitmap;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
