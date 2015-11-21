@@ -204,7 +204,7 @@ public class AddActivity extends Activity implements View.OnClickListener{
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.showAsDropDown(view);
+        popupWindow.showAsDropDown(view,100,10);
 
         YoYo.with(Techniques.FlipInX).duration(500).playOn(contentView);
 

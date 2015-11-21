@@ -7,5 +7,5 @@ package team.ideart.shiguang_app.app.utils;
  * @date 2015/11/21
  */
 public class Host {
-    public static String SERVER="http://121.250.208.32:8080/";
+    public static String SERVER="http://192.168.217.103:8080/";
 }

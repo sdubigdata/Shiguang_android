@@ -53,6 +53,7 @@
 
                 <TextView
                     android:text="密码"
+                    android:password="true"
                     android:textColor="#FFF"
                     android:textStyle="bold"
                     android:textAlignment="center"

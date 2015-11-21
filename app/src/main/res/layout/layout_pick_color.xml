@@ -39,28 +39,11 @@
             android:tag="#889B59B6"
             />
         <ImageView
-            android:id="@+id/img5"
+            android:id="@+id/img9"
             android:minWidth="60dp"
             android:minHeight="60dp"
-            android:background="#8834495E"
-            android:tag="#8834495E"
-            />
-        <ImageView
-            android:id="@+id/img6"
-            android:minWidth="60dp"
-            android:minHeight="60dp"
-            android:background="#88F1C40F"
-            android:tag="#88F1C40F"
-            />
-    </TableRow>
-
-    <TableRow>
-        <ImageView
-            android:id="@+id/img7"
-            android:minWidth="60dp"
-            android:minHeight="60dp"
-            android:background="#88E67E22"
-            android:tag="#88E67E22"
+            android:background="#8895A5A6"
+            android:tag="#8895A5A6"
             />
         <ImageView
             android:id="@+id/img8"
@@ -69,12 +52,29 @@
             android:background="#88E74C3C"
             android:tag="#88E74C3C"
             />
+    </TableRow>
+
+    <TableRow>
         <ImageView
-            android:id="@+id/img9"
+            android:id="@+id/img6"
             android:minWidth="60dp"
             android:minHeight="60dp"
-            android:background="#8895A5A6"
-            android:tag="#8895A5A6"
+            android:background="#88F1C40F"
+            android:tag="#88F1C40F"
+            />
+        <ImageView
+            android:id="@+id/img7"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:background="#88E67E22"
+            android:tag="#88E67E22"
+            />
+        <ImageView
+            android:id="@+id/img5"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:background="#8834495E"
+            android:tag="#8834495E"
             />
     </TableRow>
 
