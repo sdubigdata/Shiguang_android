@@ -123,7 +123,6 @@ public class MainFragment extends Fragment{
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 loadingTxt.setText("加载失败");
-                Log.e("LIST TIMELINE", errorResponse.toString());
             }
         });
     }

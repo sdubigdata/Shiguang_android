@@ -132,7 +132,7 @@ public class MainActivity extends Activity {
                 break;
             case "EXIT":
                 exitApp();
-                break;
+                return;
             default:
                 fragment = new MainFragment();
         }
