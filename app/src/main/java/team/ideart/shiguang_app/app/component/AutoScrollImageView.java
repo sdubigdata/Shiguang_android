@@ -54,6 +54,7 @@ public class AutoScrollImageView extends ImageView {
      */
     @SuppressLint("NewApi")
     private void init() {
+        if(getDrawable() == null) return;
         matrix = new Matrix();
         getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
             @Override
@@ -81,6 +82,7 @@ public class AutoScrollImageView extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if(matrix == null) return;
         //通过矩阵移动图片
         matrix.postTranslate(distance, 0);
         setImageMatrix(matrix);
