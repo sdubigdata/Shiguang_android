@@ -121,7 +121,7 @@ public class AddActivity extends Activity implements View.OnClickListener{
         params.add("path",path);
         params.add("content", editText.getText().toString());
         params.add("color", currentColor + "");
-        params.add("weather", "sunny");
+        params.add("weather", "阴");
 
         final RequestHandle post = client.post(Host.SERVER+"/uploadPost", params, new JsonHttpResponseHandler() {
             @Override
