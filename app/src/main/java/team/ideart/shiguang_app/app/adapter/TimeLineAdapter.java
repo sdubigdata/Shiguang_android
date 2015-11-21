@@ -11,6 +11,7 @@ import team.ideart.shiguang_app.app.entity.TimeLine;
 import team.ideart.shiguang_app.app.utils.Host;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class TimeLineAdapter extends BaseAdapter{
         this.items = items;
         mInflater = LayoutInflater.from(context);
         imageLoader = ImageLoader.getInstance();
-        sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分");
+        sdf = new SimpleDateFormat("yyyy年MM月dd日 ");
     }
 
     @Override
@@ -70,9 +71,13 @@ public class TimeLineAdapter extends BaseAdapter{
         }else{
             viewHolder = (ViewHolder) view.getTag();
         }
-        String date = sdf.format(new Date(timeline.getDate()));
 
-        viewHolder.dateTime.setText(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(timeline.getDate()));
+        String pmam = getPMAM(calendar.get(Calendar.HOUR_OF_DAY));
+        String date = sdf.format(timeline.getDate());
+
+        viewHolder.dateTime.setText(date + "星期" + getDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK) - 1) + " " + pmam);
         viewHolder.location.setText(loaction);
         viewHolder.weather.setText(timeline.getWeather());
         viewHolder.overlay.setBackgroundColor(timeline.getColor());
@@ -95,5 +100,20 @@ public class TimeLineAdapter extends BaseAdapter{
             imageLoader.displayImage(imgUrl, imageView);
     }
 
+    private String getPMAM(int hour){
+        if(0 <= hour && hour <6){
+            return "凌晨";
+        }else if(hour < 12){
+            return "上午";
+        }else if(hour < 18){
+            return "下午";
+        }else{
+            return "晚上";
+        }
+    }
+    private static final String[] DAY_OF_WEEK_ARRAY = new String[]{"日", "一", "二", "三", "四", "五", "六"};
+    private String getDayOfWeek(int numDay) {
+        return DAY_OF_WEEK_ARRAY[numDay];
+    }
 
 }
