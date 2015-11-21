@@ -71,19 +71,19 @@
 
                 android:layout_height="60dp" />
 
-            <!--<ImageView-->
-                <!--android:id="@+id/iv_add_voice"-->
-                <!--android:layout_width="60dp"-->
-                <!--android:src="@drawable/add_sound"-->
-                <!--android:layout_margin="10dp"-->
-                <!--android:layout_height="60dp" />-->
+            <ImageView
+                android:id="@+id/iv_add_voice"
+                android:layout_width="60dp"
+                android:src="@drawable/add_sound"
+                android:layout_margin="10dp"
+                android:layout_height="60dp" />
 
-            <!--<ImageView-->
-                <!--android:id="@+id/iv_add_video"-->
-                <!--android:layout_width="60dp"-->
-                <!--android:layout_margin="10dp"-->
-                <!--android:src="@drawable/add_video"-->
-                <!--android:layout_height="60dp" />-->
+            <ImageView
+                android:id="@+id/iv_add_video"
+                android:layout_width="60dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/add_video"
+                android:layout_height="60dp" />
 
         </LinearLayout>
 
